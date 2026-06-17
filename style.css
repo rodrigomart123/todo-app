@@ -74,10 +74,21 @@ body {
     cursor: pointer;
     color: #ccc;
     font-size: 16px;
+    margin-left: 10px;
 }
 
 .tarefa .apagar:hover {
     color: #e74c3c;
+}
+
+.tarefa .editar {
+    cursor: pointer;
+    color: #ccc;
+    font-size: 16px;
+}
+
+.tarefa .editar:hover {
+    color: #4a90d9;
 }
 
 .tarefa.feita .checkbox {
