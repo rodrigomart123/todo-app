@@ -51,3 +51,8 @@ h1 {
     color: red;
     font-weight: bold;
 }
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}

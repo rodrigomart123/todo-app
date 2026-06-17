@@ -35,4 +35,8 @@ taskList.addEventListener('click', function(e) {
         var li = e.target.parentElement;
         taskList.removeChild(li);
     }
+    
+    if (e.target.tagName === 'LI') {
+        e.target.classList.toggle('completed');
+    }
 });
