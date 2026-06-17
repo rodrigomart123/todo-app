@@ -1,87 +1,34 @@
-var tarefas = [];
-var campoTarefa = document.getElementById('campoTarefa');
-var botaoAdicionar = document.getElementById('botaoAdicionar');
-var listaTarefas = document.getElementById('listaTarefas');
+var tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+var campo = document.getElementById('campoTarefa');
+var lista = document.getElementById('listaTarefas');
 
-function carregarTarefas() {
-    var guardado = localStorage.getItem('tarefas');
-    if (guardado) {
-        tarefas = JSON.parse(guardado);
-    }
-}
-
-function guardarTarefas() {
+function guardar() {
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
 
-function adicionarTarefa() {
-    var texto = campoTarefa.value.trim();
-    if (texto === '') return;
-
-    tarefas.push({
-        id: Date.now(),
-        texto: texto,
-        feita: false
-    });
-    guardarTarefas();
-    mostrarTarefas();
-    campoTarefa.value = '';
-}
-
-function apagarTarefa(id) {
-    tarefas = tarefas.filter(function(t) { return t.id !== id; });
-    guardarTarefas();
-    mostrarTarefas();
-}
-
-function toggleTarefa(id) {
-    for (var i = 0; i < tarefas.length; i++) {
-        if (tarefas[i].id === id) {
-            tarefas[i].feita = !tarefas[i].feita;
-            break;
-        }
-    }
-    guardarTarefas();
-    mostrarTarefas();
-}
-
-function mostrarTarefas() {
-    listaTarefas.innerHTML = '';
-    for (var i = 0; i < tarefas.length; i++) {
-        var tarefa = tarefas[i];
-
+function mostrar() {
+    lista.innerHTML = '';
+    tarefas.forEach(function(t) {
         var div = document.createElement('div');
-        div.className = 'tarefa' + (tarefa.feita ? ' feita' : '');
-
-        var checkbox = document.createElement('span');
-        checkbox.className = 'checkbox';
-        checkbox.textContent = tarefa.feita ? '☑' : '☐';
-
-        var texto = document.createElement('span');
-        texto.className = 'texto';
-        texto.textContent = tarefa.texto;
-
-        var apagar = document.createElement('span');
-        apagar.className = 'apagar';
-        apagar.textContent = '×';
-
-        div.appendChild(checkbox);
-        div.appendChild(texto);
-        div.appendChild(apagar);
-        listaTarefas.appendChild(div);
-
-        (function(id) {
-            checkbox.addEventListener('click', function() { toggleTarefa(id); });
-            texto.addEventListener('click', function() { toggleTarefa(id); });
-            apagar.addEventListener('click', function() { apagarTarefa(id); });
-        })(tarefa.id);
-    }
+        div.className = 'tarefa' + (t.feita ? ' feita' : '');
+        div.innerHTML = '<span class="checkbox">' + (t.feita ? '☑' : '☐') + '</span>' +
+                        '<span class="texto">' + t.texto + '</span>' +
+                        '<span class="apagar">×</span>';
+        div.querySelector('.checkbox').onclick = function() { t.feita = !t.feita; guardar(); mostrar(); };
+        div.querySelector('.texto').onclick = function() { t.feita = !t.feita; guardar(); mostrar(); };
+        div.querySelector('.apagar').onclick = function() { tarefas = tarefas.filter(function(x) { return x.id !== t.id; }); guardar(); mostrar(); };
+        lista.appendChild(div);
+    });
 }
 
-botaoAdicionar.addEventListener('click', adicionarTarefa);
-campoTarefa.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') adicionarTarefa();
-});
+function adicionar() {
+    var texto = campo.value.trim();
+    if (texto === '') return;
+    tarefas.push({ id: Date.now(), texto: texto, feita: false });
+    guardar(); mostrar();
+    campo.value = '';
+}
 
-carregarTarefas();
-mostrarTarefas();
+document.getElementById('botaoAdicionar').onclick = adicionar;
+campo.onkeypress = function(e) { if (e.key === 'Enter') adicionar(); };
+mostrar();
