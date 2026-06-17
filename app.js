@@ -29,3 +29,10 @@ taskInput.addEventListener('keypress', function(e) {
         addTask();
     }
 });
+
+taskList.addEventListener('click', function(e) {
+    if (e.target.className === 'delete-btn') {
+        var li = e.target.parentElement;
+        taskList.removeChild(li);
+    }
+});
