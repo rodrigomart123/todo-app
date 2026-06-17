@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="card">
+        <h2>Minhas Tarefas</h2>
+        <div class="input-area">
+            <input type="text" id="campoTarefa" placeholder="O que precisa de ser feito?">
+            <button id="botaoAdicionar">+</button>
+        </div>
+        <div id="listaTarefas"></div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
