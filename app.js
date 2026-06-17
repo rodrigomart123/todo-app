@@ -11,9 +11,9 @@ function mostrar() {
     tarefas.forEach(function(t) {
         var div = document.createElement('div');
         div.className = 'tarefa' + (t.feita ? ' feita' : '');
-        div.innerHTML = '<span class="checkbox">' + (t.feita ? '☑' : '☐') + '</span>' +
+        div.innerHTML = '<span class="checkbox"><i class="fa-' + (t.feita ? 'solid fa-circle-check' : 'regular fa-circle') + '"></i></span>' +
                         '<span class="texto">' + t.texto + '</span>' +
-                        '<span class="apagar">×</span>';
+                        '<span class="apagar"><i class="fa-solid fa-trash-can"></i></span>';
         div.querySelector('.checkbox').onclick = function() { t.feita = !t.feita; guardar(); mostrar(); };
         div.querySelector('.texto').onclick = function() { t.feita = !t.feita; guardar(); mostrar(); };
         div.querySelector('.apagar').onclick = function() { tarefas = tarefas.filter(function(x) { return x.id !== t.id; }); guardar(); mostrar(); };

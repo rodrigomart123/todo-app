@@ -73,7 +73,11 @@ body {
 .tarefa .apagar {
     cursor: pointer;
     color: #ccc;
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.tarefa .apagar:hover {
+    color: #e74c3c;
 }
 
 .tarefa.feita .checkbox {
